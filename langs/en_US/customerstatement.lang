@@ -1,0 +1,45 @@
+# Translation file
+
+#
+# Generic
+#
+
+# Module label 'ModuleCustomerStatementName'
+ModuleCustomerStatementName = CustomerStatement
+# Module description 'ModuleCustomerStatementDesc'
+ModuleCustomerStatementDesc = CustomerStatement description
+CustomerStatement=Customer Statement
+GenerateStatement=Generate Statement
+DownloadStatement=Download PDF
+GenerateCustomerStatement=Generate Statement
+
+#
+# Admin page
+#
+CustomerStatementSetup = CustomerStatement setup
+Settings = Settings
+CustomerStatementSetupPage = CustomerStatement setup page
+NewSection=New section
+CUSTOMERSTATEMENT_MYPARAM1 = My param 1
+CUSTOMERSTATEMENT_MYPARAM1Tooltip = My param 1 tooltip
+CUSTOMERSTATEMENT_MYPARAM2=My param 2
+CUSTOMERSTATEMENT_MYPARAM2Tooltip=My param 2 tooltip
+VATIntraShort=VAT No.
+#
+# About page
+#
+About = About
+CustomerStatementAbout = About CustomerStatement
+CustomerStatementAboutPage = CustomerStatement about page
+
+#
+# Sample page
+#
+CustomerStatementArea = Home CustomerStatement
+MyPageName = My page name
+
+#
+# Sample widget
+#
+MyWidget = My widget
+MyWidgetDescription = My widget description
