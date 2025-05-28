@@ -5,7 +5,7 @@
 This module generates a customer statement that includes all invoice, credit note, and payment transaction for a customer. It adds a new button to the Third party card.
 When clicked, the user is presented with a modal to select a date range for the statement.
 
-The statement of saved and available to view/download from the linked files section.
+The statement of saved nad available to view/download from the linked files section.
 
 This is a work in progress and functionality may change over time.
 
