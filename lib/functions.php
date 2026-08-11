@@ -9,8 +9,8 @@ function getCustomerStatementData($db, $socid, $startdate, $enddate): array
 
     // Opening balance before startdate
     $sql_opening = "SELECT SUM(f.total_ttc - COALESCE(p.amount, 0)) as opening_balance FROM " . MAIN_DB_PREFIX . "facture as f LEFT JOIN ( SELECT pf.fk_facture, SUM(pf.amount) as amount";
-    $sql_opening .=" FROM " . MAIN_DB_PREFIX . "paiement_facture pf INNER JOIN " . MAIN_DB_PREFIX . "paiement p ON pf.fk_paiement = p.rowid WHERE p.datep < '" . $db->escape($startdate) . "'";
-    $sql_opening .=" GROUP BY pf.fk_facture) as p ON f.rowid = p.fk_facture WHERE f.fk_soc = " . ((int)$socid) . " AND f.datef < '" . $db->escape($startdate) . "' AND f.fk_statut IN (1,2)";
+    $sql_opening .= " FROM " . MAIN_DB_PREFIX . "paiement_facture pf INNER JOIN " . MAIN_DB_PREFIX . "paiement p ON pf.fk_paiement = p.rowid WHERE p.datep < '" . $db->escape($startdate) . "'";
+    $sql_opening .= " GROUP BY pf.fk_facture) as p ON f.rowid = p.fk_facture WHERE f.fk_soc = " . ((int)$socid) . " AND f.datef < '" . $db->escape($startdate) . "' AND f.fk_statut IN (1,2)";
 
     $res_opening = $db->query($sql_opening);
     $opening_balance = 0;
@@ -98,27 +98,48 @@ function getCustomerStatementData($db, $socid, $startdate, $enddate): array
         '90+' => 0,
         '60-89' => 0,
         'current' => 0,
-        'not_due'=>0,
+        'not_due' => 0,
         'total' => 0
     ];
 
     $sql_aging = "SELECT f.date_lim_reglement, f.total_ttc, COALESCE(p.amount, 0) as paid FROM " . MAIN_DB_PREFIX . "facture f LEFT JOIN (SELECT pf.fk_facture, SUM(pf.amount) as amount";
-    $sql_aging .= " FROM " . MAIN_DB_PREFIX . "paiement_facture pf INNER JOIN " . MAIN_DB_PREFIX . "paiement p ON pf.fk_paiement = p.rowid WHERE p.datep < '".$db->escape($enddate)."'";
-    $sql_aging .= " GROUP BY pf.fk_facture) p ON f.rowid = p.fk_facture WHERE f.fk_soc = " . ((int)$socid) . " AND f.datef <=  '".$db->escape($enddate)."' AND f.fk_statut IN (1,2) AND f.paye = 0";
+    $sql_aging .= " FROM " . MAIN_DB_PREFIX . "paiement_facture pf INNER JOIN " . MAIN_DB_PREFIX . "paiement p ON pf.fk_paiement = p.rowid WHERE p.datep < '" . $db->escape($enddate) . "'";
+    $sql_aging .= " GROUP BY pf.fk_facture) p ON f.rowid = p.fk_facture WHERE f.fk_soc = " . ((int)$socid) . " AND f.datef <= '" . $db->escape($enddate) . "' AND f.fk_statut IN (1,2) AND f.paye = 0";
 
     $res_aging = $db->query($sql_aging);
+
     while ($obj = $db->fetch_object($res_aging)) {
         $amount_due = (float)$obj->total_ttc - (float)$obj->paid;
-        if ($amount_due <= 0) continue;
+
+        if ($amount_due <= 0) {
+            continue;
+        }
 
         $due_date = new DateTime($obj->date_lim_reglement);
-        $diff = $due_date->diff($statement_end);
-        $age_days = $diff->invert ? 0 : $diff->days;
+
+        /*
+         * Future due date = not due.
+         *
+         * Due date today is NOT future, therefore it falls
+         * into current and contributes to due_now.
+         */
+        if ($due_date > $statement_end) {
+            $aging['not_due'] += $amount_due;
+            continue;
+        }
+
+        /*
+         * Invoice is due today or overdue.
+         *
+         * Number of days since the due date.
+         * Due today = 0 days
+         */
+        $age_days = $due_date->diff($statement_end)->days;
 
         if ($age_days < 30) {
-            $aging['not_due'] += $amount_due;
-        } elseif ($age_days < 60) {
             $aging['current'] += $amount_due;
+        } elseif ($age_days < 60) {
+            $aging['60-89'] += $amount_due;
         } elseif ($age_days < 90) {
             $aging['60-89'] += $amount_due;
         } else {
@@ -126,16 +147,21 @@ function getCustomerStatementData($db, $socid, $startdate, $enddate): array
         }
     }
 
-    $due_now = $aging['current'] + $aging['60-89'] + $aging['90+'];
-    $aging['total'] = $aging['not_due']+ $aging['current'] + $aging['60-89'] + $aging['90+'];
+    $due_now =
+        $aging['current']
+        + $aging['60-89']
+        + $aging['90+'];
 
-
+    $aging['total'] =
+        $aging['not_due']
+        + $aging['current']
+        + $aging['60-89']
+        + $aging['90+'];
 
     return [
         'transactions' => $data,
         'aging' => $aging,
         'due_now' => $due_now
-
     ];
 }
 
