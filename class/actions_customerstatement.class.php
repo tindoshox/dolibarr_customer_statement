@@ -113,7 +113,7 @@ class ActionsCustomerStatement extends CommonHookActions
         <div class="popup-body">
             <form id="statementForm" method="POST" action="' . DOL_URL_ROOT . '/custom/customerstatement/statement_pdf.php" target="hiddenIframe">
                 <input type="hidden" name="id" value="' . $object->id . '">
-                <input type="hidden" name="token" value="' . newToken() . '">
+                <input type="hidden" name="token" value="' . $token . '">
 
                 <table class="noborder" width="100%">
                     <tr><td>' . $langs->trans("StartDate") . '</td><td>' .
@@ -140,7 +140,8 @@ class ActionsCustomerStatement extends CommonHookActions
 #statementModal {
     position: fixed;
     top: 0; left: 0;
-    width: 100%; height: 100%;
+    width: 100%; 
+    height: 100%;
     background-color: rgba(0,0,0,0.4);
     display: none;
     z-index: 9999;
@@ -162,6 +163,11 @@ class ActionsCustomerStatement extends CommonHookActions
     font-size: 16px;
     margin-bottom: 10px;
 }
+
+div#ui-datepicker-div {
+    z-index: 10000 !important;
+}
+
 </style>
 ';
 
