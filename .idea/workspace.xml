@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0ae44d2-4a15-4e78-b038-aa825264a07a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/core/modules/modCustomerStatement.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/core/modules/modCustomerStatement.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b54f962d-e9bd-4ee4-8f9f-45c43a687a3e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b54f962d-e9bd-4ee4-8f9f-45c43a687a3e.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/modules/societe/doc/pdf_customerstatement.modules.php" beforeDir="false" afterPath="$PROJECT_DIR$/core/modules/societe/doc/pdf_customerstatement.modules.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pdf_generator.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pdf_generator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statement_pdf.php" beforeDir="false" afterPath="$PROJECT_DIR$/statement_pdf.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/functions.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +22,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/lib/customerstatement.lib.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/functions.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/statement_pdf.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -29,32 +35,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "database.data.extractors.current.export.id": "JSON-Groovy.json.groovy",
-    "database.data.extractors.current.id": "JSON-Groovy.json.groovy",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/ts/develop/dolibarr/dolibarr_custom/customerstatement",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "database.query.execution",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;database.data.extractors.current.export.id&quot;: &quot;JSON-Groovy.json.groovy&quot;,
+    &quot;database.data.extractors.current.id&quot;: &quot;JSON-Groovy.json.groovy&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/ts/develop/dolibarr/dolibarr_custom/customerstatement&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PS-241.19416.23" />
-        <option value="bundled-php-predefined-ba97393d7c68-48a1a656d44e-com.jetbrains.php.sharedIndexes-PS-241.19416.23" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-PS-252.28539.9" />
+        <option value="bundled-php-predefined-a98d8de5180a-58f58c5035b3-com.jetbrains.php.sharedIndexes-PS-252.28539.9" />
       </set>
     </attachedChunks>
   </component>
@@ -68,6 +76,9 @@
       <updated>1745242442107</updated>
       <workItem from="1745242443514" duration="2072000" />
       <workItem from="1745314345401" duration="1388000" />
+      <workItem from="1786442611092" duration="1529000" />
+      <workItem from="1786449319730" duration="55000" />
+      <workItem from="1786449396730" duration="3637000" />
     </task>
     <servers />
   </component>

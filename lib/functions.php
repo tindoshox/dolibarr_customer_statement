@@ -25,6 +25,7 @@ function getCustomerStatementData($db, $socid, $startdate, $enddate): array
         'ref' => '',
         'debit' => '',
         'credit' => '',
+        'status' => '',
         'balance' => $running_balance
     ];
 
@@ -32,7 +33,7 @@ function getCustomerStatementData($db, $socid, $startdate, $enddate): array
     $transactions = [];
 
 // Fetch invoices
-    $sql_inv = " SELECT datef as date, ref, total_ttc, type FROM " . MAIN_DB_PREFIX . "facture WHERE fk_soc = " . ((int)$socid) . " AND datef BETWEEN '" . $db->escape($startdate) . "' AND '" . $db->escape($enddate) . "'";
+    $sql_inv = " SELECT datef as date, ref, total_ttc, type, paye FROM " . MAIN_DB_PREFIX . "facture WHERE fk_soc = " . ((int)$socid) . " AND datef BETWEEN '" . $db->escape($startdate) . "' AND '" . $db->escape($enddate) . "'";
     $sql_inv .= " AND fk_statut IN (1,2)";
 
     $res_inv = $db->query($sql_inv);
@@ -44,6 +45,7 @@ function getCustomerStatementData($db, $socid, $startdate, $enddate): array
             'ref' => $obj->ref,
             'debit' => $is_credit_note ? '' : (float)$obj->total_ttc,
             'credit' => $is_credit_note ? (float)$obj->total_ttc * -1 : '',
+            'status' => $obj->paye ? 'P' : 'U',
 
         ];
     }
@@ -102,7 +104,7 @@ function getCustomerStatementData($db, $socid, $startdate, $enddate): array
 
     $sql_aging = "SELECT f.date_lim_reglement, f.total_ttc, COALESCE(p.amount, 0) as paid FROM " . MAIN_DB_PREFIX . "facture f LEFT JOIN (SELECT pf.fk_facture, SUM(pf.amount) as amount";
     $sql_aging .= " FROM " . MAIN_DB_PREFIX . "paiement_facture pf INNER JOIN " . MAIN_DB_PREFIX . "paiement p ON pf.fk_paiement = p.rowid WHERE p.datep < '".$db->escape($enddate)."'";
-    $sql_aging .= " GROUP BY pf.fk_facture) p ON f.rowid = p.fk_facture WHERE f.fk_soc = " . ((int)$socid) . " AND f.datef <  '".$db->escape($enddate)."' AND f.fk_statut IN (1,2) AND f.paye = 0";
+    $sql_aging .= " GROUP BY pf.fk_facture) p ON f.rowid = p.fk_facture WHERE f.fk_soc = " . ((int)$socid) . " AND f.datef <=  '".$db->escape($enddate)."' AND f.fk_statut IN (1,2) AND f.paye = 0";
 
     $res_aging = $db->query($sql_aging);
     while ($obj = $db->fetch_object($res_aging)) {

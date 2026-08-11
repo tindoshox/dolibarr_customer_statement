@@ -156,7 +156,7 @@ class pdf_customerstatement extends TCPDF
         $leftMargin = $this->getMargins()['left'];
         $contentWidth = $this->getPageWidth() - $this->getMargins()['left'] - $this->getMargins()['right'];
 
-        $colWidths = [25, 30, 35, 30, 30, 30];
+        $colWidths = [25, 30, 10, 25, 30, 30, 30];
         $this->SetX($leftMargin);
 
         $this->SetFont('helvetica', 'B', 10);
@@ -166,7 +166,7 @@ class pdf_customerstatement extends TCPDF
         $this->SetFillColor(240, 240, 240);
         $this->SetDrawColor(0);
 
-        $headers = ['Date', 'Type', 'Reference', 'Debit', 'Credit', 'Balance'];
+        $headers = ['Date', 'Type', 'State', 'Reference', 'Debit', 'Credit', 'Balance'];
         foreach ($headers as $i => $title) {
             $this->Cell($colWidths[$i], 7, $title, 1, 0, $i < 3 ? 'L' : 'R', 1);
         }
@@ -182,12 +182,13 @@ class pdf_customerstatement extends TCPDF
             if ($index > 0) $balance += $debit - $credit;
 
             $this->SetX($leftMargin);
-            $this->Cell($colWidths[0], 6, explode(' ', $line['date'])[0], 'LR');
-            $this->Cell($colWidths[1], 6, $line['type'], 'LR');
-            $this->Cell($colWidths[2], 6, $line['ref'], 'LR');
-            $this->Cell($colWidths[3], 6, $debit > 0 ? number_format($debit, 2) : '', 'LR', 0, 'R');
-            $this->Cell($colWidths[4], 6, $credit > 0 ? number_format($credit, 2) : '', 'LR', 0, 'R');
-            $this->Cell($colWidths[5], 6, number_format($balance, 2), 'LR', 1, 'R');
+            $this->Cell($colWidths[0], 7, explode(' ', $line['date'])[0], 'LR');
+            $this->Cell($colWidths[1], 7, $line['type'], 'LR');
+            $this->Cell($colWidths[2], 7, $line['status'], 'LR', 0 ,'C');
+            $this->Cell($colWidths[3], 7, $line['ref'], 'LR', 0, 'L');
+            $this->Cell($colWidths[4], 7, $debit > 0 ? number_format($debit, 2) : '', 'LR', 0, 'R');
+            $this->Cell($colWidths[5], 7, $credit > 0 ? number_format($credit, 2) : '', 'LR', 0, 'R');
+            $this->Cell($colWidths[6], 7, number_format($balance, 2), 'LR', 1, 'R');
         }
 
         // --- Fill if short ---
@@ -216,10 +217,10 @@ class pdf_customerstatement extends TCPDF
         // --- Draw closing balance row ---
         $this->SetFont('helvetica', 'B', 10);
         $this->SetX($leftMargin);
-        $this->Cell($colWidths[0] + $colWidths[1] + $colWidths[2], 6, 'Closing Balance', 'LTB');
-        $this->Cell($colWidths[3], 6, '', 'TB');
-        $this->Cell($colWidths[4], 6, '', 'TB');
-        $this->Cell($colWidths[5], 6, number_format($balance, 2), 'RTB', 1, 'R');
+        $this->Cell($colWidths[0] + $colWidths[1] + $colWidths[2], 7, 'Closing Balance', 'LTB');
+        $this->Cell($colWidths[5], 7, '', 'TB');
+        $this->Cell($colWidths[6], 7, '', 'TB');
+        $this->Cell($colWidths[7], 7, number_format($balance, 2), 'RTB', 1, 'R');
 
         // --- Optional bottom border ---
         $this->SetX($leftMargin);
